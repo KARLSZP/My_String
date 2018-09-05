@@ -202,15 +202,137 @@ const My_String_Data* My_String::get_data() const {
 }
 
 //modifiers
-My_String& My_String::operator+=(const My_String&);
-My_String& My_String::operator+=(const char*);
-My_String& My_String::operator+=(const char);
-void My_String::append(const My_String&);
-void My_String::append(const My_String&, size_t, size_t);
-void My_String::append(const char*);
-void My_String::append(const char*, size_t);
-void My_String::append(size_t, char);
-void My_String::push_back(const char);
+My_String& My_String::operator+=(const My_String& str) {
+	char* buf = new char[data->capacity];
+	strcpy(buf, data->_data);
+	delete[] data->_data;
+	data->_data = new char[data->capacity + str.get_data()->capacity];
+	strcpy(data->_data, buf);
+	for (size_t i = 0; i < str.get_data()->length; i++) {
+		data->_data[data->length + i] = str.get_data()->_data[i];
+	}
+	data->_data[data->length + str.get_data()->length] = '\0';
+	data->capacity = data->capacity + str.get_data()->capacity;
+	data->length = data->length + str.get_data()->length;
+	delete[] buf;
+	return *this;
+}
+
+My_String& My_String::operator+=(const char* str) {
+	char* buf = new char[data->capacity];
+	strcpy(buf, data->_data);
+	delete[] data->_data;
+	data->_data = new char[data->capacity + strlen(str)];
+	strcpy(data->_data, buf);
+	for (size_t i = 0; i < strlen(str); i++) {
+		data->_data[data->length + i] = str[i];
+	}
+	data->_data[data->length + strlen(str)] = '\0';
+	data->capacity = data->capacity + strlen(str);
+	data->length = data->length + strlen(str);
+	delete[] buf;
+	return *this;
+}
+
+My_String& My_String::operator+=(const char chr) {
+	if (data->capacity > data->length + 1) {
+		data->_data[data->length] = chr;
+		data->_data[data->length + 1] = '\0';
+	}
+	else {
+		char* buf = new char[data->capacity];
+		strcpy(buf, data->_data);
+		delete[] data->_data;
+		data->_data = new char[data->length + 1];
+		strcpy(data->_data, buf);
+		data->_data[data->length] = chr;
+		data->_data[data->length + 1] = '\0';
+		data->capacity = data->length + 1;
+		data->length = data->length + 1;
+		delete[] buf;		
+	}
+	return *this;
+}
+
+void My_String::append(const My_String& str) {
+	char* buf = new char[data->capacity];
+	strcpy(buf, data->_data);
+	delete[] data->_data;
+	data->_data = new char[data->capacity + str.get_data()->capacity];
+	strcpy(data->_data, buf);
+	for (size_t i = 0; i < str.get_data()->length; i++) {
+		data->_data[data->length + i] = str.get_data()->_data[i];
+	}
+	data->_data[data->length + str.get_data()->length] = '\0';
+	data->capacity = data->capacity + str.get_data()->capacity;
+	data->length = data->length + str.get_data()->length;
+	delete[] buf;
+}
+
+void My_String::append(const My_String& str, size_t pos, size_t num) {
+	char* buf = new char[data->capacity];
+	strcpy(buf, data->_data);
+	delete[] data->_data;
+	data->_data = new char[data->capacity + num];
+	strcpy(data->_data, buf);
+	for (size_t i = pos; i < pos + num; i++) {
+		data->_data[data->length + i - pos] = str.get_data()->_data[i];
+	}
+	data->_data[data->length + num] = '\0';
+	data->capacity = data->capacity + num;
+	data->length = data->length + num;
+	delete[] buf;
+}
+
+void My_String::append(const char* str) {
+	char* buf = new char[data->capacity];
+	strcpy(buf, data->_data);
+	delete[] data->_data;
+	data->_data = new char[data->capacity + strlen(str)];
+	strcpy(data->_data, buf);
+	for (size_t i = 0; i < strlen(str); i++) {
+		data->_data[data->length + i] = str[i];
+	}
+	data->_data[data->length + strlen(str)] = '\0';
+	data->capacity = data->capacity + strlen(str);
+	data->length = data->length + strlen(str);
+	delete[] buf;
+}
+
+void My_String::append(const char* str, size_t num) {
+	char* buf = new char[data->capacity];
+	strcpy(buf, data->_data);
+	delete[] data->_data;
+	data->_data = new char[data->capacity + num];
+	strcpy(data->_data, buf);
+	for (size_t i = 0; i < num; i++) {
+		data->_data[data->length + i] = str[i];
+	}
+	data->_data[data->length + num] = '\0';
+	data->capacity = data->capacity + num;
+	data->length = data->length + num;
+	delete[] buf;
+}
+
+void My_String::append(size_t num, char chr) {
+	char* buf = new char[data->capacity];
+	strcpy(buf, data->_data);
+	delete[] data->_data;
+	data->_data = new char[data->capacity + num];
+	strcpy(data->_data, buf);
+	for (size_t i = 0; i < num; i++) {
+		data->_data[data->length + i] = chr;
+	}
+	data->_data[data->length + num] = '\0';
+	data->capacity = data->capacity + num;
+	data->length = data->length + num;
+	delete[] buf;
+}
+
+void My_String::push_back(const char chr) {
+	this->append(1, chr);
+}
+
 void My_String::assign(const My_String&);
 void My_String::assign(const My_String&, size_t, size_t);
 void My_String::assign(const char*);
