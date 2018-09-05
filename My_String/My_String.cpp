@@ -336,12 +336,14 @@ void My_String::assign(const My_String& str) {
 }
 
 void My_String::assign(const My_String& str, size_t pos, size_t num) {
+	if (pos >= data->length) {
+		throw(out_of_range("Invalid Position!"));
+	}
 	delete[] data->_data;
 	const char* ptr = str.c_str() + pos;
 	data->length = strlen(ptr) > num ? num : strlen(ptr);
 	data->capacity = data->length + 1;
 	data->_data = new char[data->capacity];
-	
 	for (size_t i = 0; i < data->length; i++) {
 		data->_data[i] = str.get_data()->_data[i + pos];
 	}
@@ -432,17 +434,93 @@ My_String& My_String::insert(size_t pos, size_t num, char chr) {
 	return *this;
 }
 
-void My_String::erase(size_t, size_t);
-void My_String::replace(size_t, size_t, const My_String&, size_t, size_t);
-void My_String::replace(size_t, size_t, const char*, size_t);
-void My_String::replace(size_t, size_t, size_t, const char);
-void My_String::swap(My_String&);
-void My_String::pop_back();
+My_String& My_String::erase(size_t pos, size_t num = npos) {
+	My_String str_f(*this, 0, pos);
+	if (num < data->length) {
+		My_String str_b(*this, pos + num);
+		str_f += str_b;
+	}
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::replace(size_t pos, size_t len, const My_String& str) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos + len);
+	str_f += str;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::replace(size_t pos, size_t len, const My_String& str, size_t subpos, size_t sublen) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos + len);
+	My_String str_rep(str, subpos, sublen);
+	str_f += str_rep;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::replace(size_t pos, size_t len, const char* str) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos + len);
+	str_f += str;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::replace(size_t pos, size_t len, const char* str, size_t num) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos + len);
+	My_String str_rep(str, num);
+	str_f += str_rep;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::replace(size_t pos, size_t len, size_t num, const char chr) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos + len);
+	My_String str_rep(num, chr);
+	str_f += str_rep;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+void My_String::swap(My_String& str) {
+	My_String tmp(*this);
+
+}
+
+char My_String::pop_back() {
+	data->length--;
+	char tmp = data->_data[data->length];
+	data->_data[data->length] = '\0';
+	return tmp;
+}
 
 //string operations
-const My_String::char* c_str() const;
-const My_String::char* data() const;
-size_t My_String::copy(char*, size_t, size_t);
+const char* My_String::c_str() const {
+	return data->_data;
+}
+
+size_t My_String::copy(char* buf, size_t len, size_t pos = 0) {
+	for (size_t i = 0; i < len; i++) {
+		buf[0] = data->_data[pos + i];
+	}
+	return len > data->length - pos ? len : data->length - pos;
+}
 
 size_t My_String::find(const string& str, size_t pos = 0) const noexcept;
 size_t My_String::find(const char* s, size_t pos = 0) const;

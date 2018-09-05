@@ -57,28 +57,37 @@ public:
 	My_String& operator+=(const My_String&);
 	My_String& operator+=(const char*);
 	My_String& operator+=(const char);
+
 	void append(const My_String&);
 	void append(const My_String&, size_t, size_t);
 	void append(const char*);
 	void append(const char*, size_t);
 	void append(size_t, char);
+
 	void push_back(const char);
+
 	void assign(const My_String&);
 	void assign(const My_String&, size_t, size_t);
 	void assign(const char*);
 	void assign(const char*, size_t);
 	void assign(size_t, char);
+
 	My_String& insert(size_t, My_String&);
 	My_String& insert(size_t, My_String&, size_t, size_t);
 	My_String& insert(size_t, const char*);
 	My_String& insert(size_t, const char*, size_t);
 	My_String& insert(size_t, size_t, char);
-	void erase(size_t, size_t);
-	void replace(size_t, size_t, const My_String&, size_t, size_t);
-	void replace(size_t, size_t, const char*, size_t);
-	void replace(size_t, size_t, size_t, const char);
+
+	My_String& erase(size_t, size_t);
+
+	My_String& replace(size_t, size_t, const My_String&);
+	My_String& replace(size_t, size_t, const My_String&, size_t, size_t);
+	My_String& replace(size_t, size_t, const char*);
+	My_String& replace(size_t, size_t, const char*, size_t);
+	My_String& replace(size_t, size_t, size_t, const char);
+
 	void swap(My_String&);
-	void pop_back();
+	char pop_back();
 
 	//string operations
 	const char* c_str() const;
