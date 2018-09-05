@@ -68,9 +68,11 @@ public:
 	void assign(const char*);
 	void assign(const char*, size_t);
 	void assign(size_t, char);
-	void insert(size_t, My_String&, size_t, size_t);
-	void insert(size_t, const char*, size_t);
-	void insert(size_t, size_t, char);
+	My_String& insert(size_t, My_String&);
+	My_String& insert(size_t, My_String&, size_t, size_t);
+	My_String& insert(size_t, const char*);
+	My_String& insert(size_t, const char*, size_t);
+	My_String& insert(size_t, size_t, char);
 	void erase(size_t, size_t);
 	void replace(size_t, size_t, const My_String&, size_t, size_t);
 	void replace(size_t, size_t, const char*, size_t);
@@ -167,3 +169,5 @@ public:
 private:
 	My_String_Data * data;
 };
+
+//POS out of bound

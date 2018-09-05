@@ -18,14 +18,8 @@ My_String::My_String(const My_String& str) {
 	strcpy(data->_data, str.get_data()->_data);
 }
 
-My_String::My_String(const My_String& str, size_t pos, size_t num) {
-	data->_data = new char[num + 1];
-	data->capacity = str.get_data()->capacity;
-	data->length = num;
-	for (int i = pos; i < str.get_data()->length; i++) {
-		data->_data[i - pos] = str.get_data()->_data[i];
-	}
-	data->_data[num] = '\0';
+My_String::My_String(const My_String& str, size_t pos, size_t num = npos) {
+	assign(str, pos, num);
 }
 
 My_String::My_String(const char* str) {
@@ -333,14 +327,111 @@ void My_String::push_back(const char chr) {
 	this->append(1, chr);
 }
 
-void My_String::assign(const My_String&);
-void My_String::assign(const My_String&, size_t, size_t);
-void My_String::assign(const char*);
-void My_String::assign(const char*, size_t);
-void My_String::assign(size_t, char);
-void My_String::insert(size_t, My_String&, size_t, size_t);
-void My_String::insert(size_t, const char*, size_t);
-void My_String::insert(size_t, size_t, char);
+void My_String::assign(const My_String& str) {
+	delete[] data->_data;
+	data->_data = new char[str.get_data()->capacity];
+	data->capacity = str.get_data()->capacity;
+	data->length = str.get_data()->length;
+	strcpy(data->_data, str.get_data()->_data);
+}
+
+void My_String::assign(const My_String& str, size_t pos, size_t num) {
+	delete[] data->_data;
+	const char* ptr = str.c_str() + pos;
+	data->length = strlen(ptr) > num ? num : strlen(ptr);
+	data->capacity = data->length + 1;
+	data->_data = new char[data->capacity];
+	
+	for (size_t i = 0; i < data->length; i++) {
+		data->_data[i] = str.get_data()->_data[i + pos];
+	}
+	data->_data[data->length] = '\0';
+}
+
+void My_String::assign(const char* str) {
+	delete[] data->_data;
+	data->_data = new char[strlen(str) + 1];
+	data->capacity = strlen(str) + 1;
+	data->length = strlen(str);
+	strcpy(data->_data, str);
+}
+
+void My_String::assign(const char* str, size_t num) {
+	delete[] data->_data;
+	data->_data = new char[num + 1];
+	data->capacity = num + 1;
+	data->length = num;
+	for (size_t i = 0; i < num; i++) {
+		data->_data[i] = str[i];
+	}
+	data->_data[num] = '\0';
+}
+
+void My_String::assign(size_t num, char chr) {
+	delete[] data->_data;
+	data->_data = new char[num + 1];
+	data->capacity = num + 1;
+	data->length = num;
+	for (size_t i = 0; i < num; i++) {
+		data->_data[i] = chr;
+	}
+	data->_data[num] = '\0';
+}
+
+My_String& My_String::insert(size_t pos, My_String& str) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos);
+	str_f += str;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::insert(size_t pos_ins, My_String& str, size_t pos, size_t num) {
+	My_String str_f(*this, 0, pos_ins);
+	My_String str_b(*this, pos_ins);
+	My_String str_ins(str, pos, num);
+	str_f += str_ins;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::insert(size_t pos, const char* str) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos);
+	str_f += str;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::insert(size_t pos_ins, const char* str, size_t num) {
+	My_String str_f(*this, 0, pos_ins);
+	My_String str_b(*this, pos_ins);
+	My_String str_ins(str, num);
+	str_f += str_ins;
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
+My_String& My_String::insert(size_t pos, size_t num, char chr) {
+	My_String str_f(*this, 0, pos);
+	My_String str_b(*this, pos);
+	for (size_t i = 0; i < num; i++) {
+		str_f += chr;
+	}
+	str_f += str_b;
+	delete[] data->_data;
+	*this = str_f;
+	return *this;
+}
+
 void My_String::erase(size_t, size_t);
 void My_String::replace(size_t, size_t, const My_String&, size_t, size_t);
 void My_String::replace(size_t, size_t, const char*, size_t);
