@@ -522,84 +522,107 @@ size_t My_String::copy(char* buf, size_t len, size_t pos = 0) {
 	return len > data->length - pos ? len : data->length - pos;
 }
 
-size_t My_String::find(const string& str, size_t pos = 0) const noexcept;
-size_t My_String::find(const char* s, size_t pos = 0) const;
+size_t My_String::to_find(cosnt char * s1,const char* s2, size_t pos) const {
+	int i = pos, j = 0;
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+	while (i < len1&&j < len2) {
+		if (*(s1 + i) == *(s2 + j)) {
+			i++;
+			j++;
+		}
+		else {
+			i = i - j + 1;
+			j = 0;
+		}
+	}
+	return j >= len2 ? i - len2 : npos;
+}
+
+size_t My_String::find(const My_String& str, size_t pos = 0) const noexcept {
+	return to_find(data->_data, str.get_data()->_data, pos);
+}
+
+size_t My_String::find(const char* s, size_t pos = 0) const {
+	return to_find(data->_data, s, pos);
+}
+
 size_t My_String::find(const char* s, size_t pos, size_t n) const;
 size_t My_String::find(char c, size_t pos = 0) const noexcept;
 
-size_t My_String::rfind(const string& str, size_t pos = 0) const noexcept;
+size_t My_String::rfind(const My_String& str, size_t pos = 0) const noexcept;
 size_t My_String::rfind(const char* s, size_t pos = 0) const;
 size_t My_String::rfind(const char* s, size_t pos, size_t n) const;
 size_t My_String::rfind(char c, size_t pos = 0) const noexcept;
 
-size_t My_String::find_first_of(const string& str, size_t pos = 0) const noexcept;
+size_t My_String::find_first_of(const My_String& str, size_t pos = 0) const noexcept;
 size_t My_String::find_first_of(const char* s, size_t pos = 0) const;
 size_t My_String::find_first_of(const char* s, size_t pos, size_t n) const;
 size_t My_String::find_first_of(char c, size_t pos = 0) const noexcept;
 
-size_t My_String::find_last_of(const string& str, size_t pos = npos) const noexcept;
+size_t My_String::find_last_of(const My_String& str, size_t pos = npos) const noexcept;
 size_t My_String::find_last_of(const char* s, size_t pos = npos) const;
 size_t My_String::find_last_of(const char* s, size_t pos, size_t n) const;
 size_t My_String::find_last_of(char c, size_t pos = npos) const noexcept;
 
-size_t My_String::find_first_not_of(const string& str, size_t pos = 0) const noexcept;
+size_t My_String::find_first_not_of(const My_String& str, size_t pos = 0) const noexcept;
 size_t My_String::find_first_not_of(const char* s, size_t pos = 0) const;
 size_t My_String::find_first_not_of(const char* s, size_t pos, size_t n) const;
 size_t My_String::find_first_not_of(char c, size_t pos = 0) const noexcept;
 
-size_t My_String::find_last_not_of(const string& str, size_t pos = npos) const noexcept;
+size_t My_String::find_last_not_of(const My_String& str, size_t pos = npos) const noexcept;
 size_t My_String::find_last_not_of(const char* s, size_t pos = npos) const;
 size_t My_String::find_last_not_of(const char* s, size_t pos, size_t n) const;
 size_t My_String::find_last_not_of(char c, size_t pos = npos) const noexcept;
 
 My_String My_String::substr(size_t pos = 0, size_t len = npos) const;
 
-int My_String::compare(const string& str) const noexcept;
-int My_String::compare(size_t pos, size_t len, const string& str) const;
-int My_String::compare(size_t pos, size_t len, const string& str, size_t subpos, size_t sublen) const;
+int My_String::compare(const My_String& str) const noexcept;
+int My_String::compare(size_t pos, size_t len, const My_String& str) const;
+int My_String::compare(size_t pos, size_t len, const My_String& str, size_t subpos, size_t sublen) const;
 int My_String::compare(const char* s) const;
 int My_String::compare(size_t pos, size_t len, const char* s) const;
 int My_String::compare(size_t pos, size_t len, const char* s, size_t n) const;
 
 //friend Non-member function overloads
-istream& getline(istream&  is, string& str, char delim);
-istream& getline(istream&& is, string& str, char delim);
-istream& getline(istream&  is, string& str);
-istream& getline(istream&& is, string& str);
+istream& getline(istream&  is, My_String& str, char delim);
+istream& getline(istream&& is, My_String& str, char delim);
+istream& getline(istream&  is, My_String& str);
+istream& getline(istream&& is, My_String& str);
 
-string operator+ (const string& lhs, const string& rhs);
-string operator+ (string&&      lhs, string&&      rhs);
-string operator+ (string&&      lhs, const string& rhs);
-string operator+ (const string& lhs, string&&      rhs);
-string operator+ (const string& lhs, const char*   rhs);
-string operator+ (string&&      lhs, const char*   rhs);
-string operator+ (const char*   lhs, const string& rhs);
-string operator+ (const char*   lhs, string&&      rhs);
-string operator+ (const string& lhs, char          rhs);
-string operator+ (string&&      lhs, char          rhs);
-string operator+ (char          lhs, const string& rhs);
-string operator+ (char          lhs, string&&      rhs);
+My_String operator+ (const My_String& lhs, const My_String& rhs);
+My_String operator+ (My_String&&      lhs, My_String&&      rhs);
+My_String operator+ (My_String&&      lhs, const My_String& rhs);
+My_String operator+ (const My_String& lhs, My_String&&      rhs);
+My_String operator+ (const My_String& lhs, const char*   rhs);
+My_String operator+ (My_String&&      lhs, const char*   rhs);
+My_String operator+ (const char*   lhs, const My_String& rhs);
+My_String operator+ (const char*   lhs, My_String&&      rhs);
+My_String operator+ (const My_String& lhs, char          rhs);
+My_String operator+ (My_String&&      lhs, char          rhs);
+My_String operator+ (char          lhs, const My_String& rhs);
+My_String operator+ (char          lhs, My_String&&      rhs);
 
-istream& operator>> (istream& is, string& str);
-ostream& operator<< (ostream& os, const string& str);
-void swap(string& x, string& y);
+istream& operator>> (istream& is, My_String& str);
+ostream& operator<< (ostream& os, const My_String& str);
+void swap(My_String& x, My_String& y);
 
-bool operator==(const string& lhs, const string& rhs);
-bool operator==(const char*   lhs, const string& rhs);
-bool operator==(const string& lhs, const char*   rhs);
-bool operator!=(const string& lhs, const string& rhs);
-bool operator!=(const char*   lhs, const string& rhs);
-bool operator!=(const string& lhs, const char*   rhs);
-bool operator< (const string& lhs, const string& rhs);
-bool operator< (const char*   lhs, const string& rhs);
-bool operator< (const string& lhs, const char*   rhs);
-bool operator<=(const string& lhs, const string& rhs);
-bool operator<=(const char*   lhs, const string& rhs);
-bool operator<=(const string& lhs, const char*   rhs);
-bool operator> (const string& lhs, const string& rhs);
-bool operator> (const char*   lhs, const string& rhs);
-bool operator> (const string& lhs, const char*   rhs);
-bool operator>=(const string& lhs, const string& rhs);
-bool operator>=(const char*   lhs, const string& rhs);
-bool operator>=(const string& lhs, const char*   rhs);
+bool operator==(const My_String& lhs, const My_String& rhs);
+bool operator==(const char*   lhs, const My_String& rhs);
+bool operator==(const My_String& lhs, const char*   rhs);
+bool operator!=(const My_String& lhs, const My_String& rhs);
+bool operator!=(const char*   lhs, const My_String& rhs);
+bool operator!=(const My_String& lhs, const char*   rhs);
+bool operator< (const My_String& lhs, const My_String& rhs);
+bool operator< (const char*   lhs, const My_String& rhs);
+bool operator< (const My_String& lhs, const char*   rhs);
+bool operator<=(const My_String& lhs, const My_String& rhs);
+bool operator<=(const char*   lhs, const My_String& rhs);
+bool operator<=(const My_String& lhs, const char*   rhs);
+bool operator> (const My_String& lhs, const My_String& rhs);
+bool operator> (const char*   lhs, const My_String& rhs);
+bool operator> (const My_String& lhs, const char*   rhs);
+bool operator>=(const My_String& lhs, const My_String& rhs);
+bool operator>=(const char*   lhs, const My_String& rhs);
+bool operator>=(const My_String& lhs, const char*   rhs);
 #endif // !My_String_H
