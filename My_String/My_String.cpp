@@ -522,7 +522,7 @@ size_t My_String::copy(char* buf, size_t len, size_t pos = 0) {
 	return len > data->length - pos ? len : data->length - pos;
 }
 
-size_t My_String::to_find(cosnt char * s1,const char* s2, size_t pos) const {
+size_t My_String::to_find(const char* s1,const char* s2, size_t pos) const {
 	int i = pos, j = 0;
 	int len1 = strlen(s1);
 	int len2 = strlen(s2);
@@ -547,8 +547,16 @@ size_t My_String::find(const char* s, size_t pos = 0) const {
 	return to_find(data->_data, s, pos);
 }
 
-size_t My_String::find(const char* s, size_t pos, size_t n) const;
-size_t My_String::find(char c, size_t pos = 0) const noexcept;
+size_t My_String::find(const char* s, size_t pos, size_t n) const {
+	My_String tmp(n, pos);
+	return to_find(data->_data, tmp.get_data()->_data, pos);
+}
+
+size_t My_String::find(char c, size_t pos = 0) const noexcept {
+	char s[1];
+	s[0] = c;
+	return to_find(data->_data, s, pos);
+}
 
 size_t My_String::rfind(const My_String& str, size_t pos = 0) const noexcept;
 size_t My_String::rfind(const char* s, size_t pos = 0) const;
