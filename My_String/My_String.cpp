@@ -558,42 +558,215 @@ size_t My_String::find(char c, size_t pos = 0) const noexcept {
 	return to_find(data->_data, s, pos);
 }
 
-size_t My_String::rfind(const My_String& str, size_t pos = 0) const noexcept;
-size_t My_String::rfind(const char* s, size_t pos = 0) const;
-size_t My_String::rfind(const char* s, size_t pos, size_t n) const;
-size_t My_String::rfind(char c, size_t pos = 0) const noexcept;
+size_t My_String::to_rfind(const char * s1, const char* s2, size_t pos) const {
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+	int i = pos == npos ? len1 : pos, j = len2;
+	while (i >= 0&&j > 0) {
+		if (*(s1 + i) == *(s2 + j - 1)) {
+			i--;
+			j--;
+		}
+		else {
+			i = i - j + len2 + 1;
+			j = len2;
+		}
+	}
+	return j ? npos : i;
+}
+size_t My_String::rfind(const My_String& str, size_t pos = 0) const noexcept {
+	return to_rfind(data->_data, str.get_data()->_data, pos);
+}
 
-size_t My_String::find_first_of(const My_String& str, size_t pos = 0) const noexcept;
-size_t My_String::find_first_of(const char* s, size_t pos = 0) const;
-size_t My_String::find_first_of(const char* s, size_t pos, size_t n) const;
-size_t My_String::find_first_of(char c, size_t pos = 0) const noexcept;
+size_t My_String::rfind(const char* s, size_t pos = 0) const {
+	return to_rfind(data->_data, s, pos);
+}
 
-size_t My_String::find_last_of(const My_String& str, size_t pos = npos) const noexcept;
-size_t My_String::find_last_of(const char* s, size_t pos = npos) const;
-size_t My_String::find_last_of(const char* s, size_t pos, size_t n) const;
-size_t My_String::find_last_of(char c, size_t pos = npos) const noexcept;
+size_t My_String::rfind(const char* s, size_t pos, size_t n) const {
+	My_String tmp(n, pos);
+	return to_rfind(data->_data, tmp.get_data()->_data, pos);
+}
 
-size_t My_String::find_first_not_of(const My_String& str, size_t pos = 0) const noexcept;
-size_t My_String::find_first_not_of(const char* s, size_t pos = 0) const;
-size_t My_String::find_first_not_of(const char* s, size_t pos, size_t n) const;
-size_t My_String::find_first_not_of(char c, size_t pos = 0) const noexcept;
+size_t My_String::rfind(char c, size_t pos = 0) const noexcept {
+	char s[1];
+	s[0] = c;
+	return to_rfind(data->_data, s, pos);
+}
 
-size_t My_String::find_last_not_of(const My_String& str, size_t pos = npos) const noexcept;
-size_t My_String::find_last_not_of(const char* s, size_t pos = npos) const;
-size_t My_String::find_last_not_of(const char* s, size_t pos, size_t n) const;
-size_t My_String::find_last_not_of(char c, size_t pos = npos) const noexcept;
+size_t My_String::to_find_first(const char * s1, const char* s2, size_t pos) const {
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+	int i = pos, j = 0;
+	for (; i < len1; i++) {
+		for (size_t j = 0; j < len2; j++) {
+			if (*(s1 + i) == *(s2 + j)) {
+				return i;
+			}
+		}
+	}
+	return npos;
+}
 
-My_String My_String::substr(size_t pos = 0, size_t len = npos) const;
+size_t My_String::find_first_of(const My_String& str, size_t pos = 0) const noexcept {
+	return to_find_first(data->_data, str.get_data()->_data, pos);
+}
 
-int My_String::compare(const My_String& str) const noexcept;
-int My_String::compare(size_t pos, size_t len, const My_String& str) const;
-int My_String::compare(size_t pos, size_t len, const My_String& str, size_t subpos, size_t sublen) const;
-int My_String::compare(const char* s) const;
-int My_String::compare(size_t pos, size_t len, const char* s) const;
-int My_String::compare(size_t pos, size_t len, const char* s, size_t n) const;
+size_t My_String::find_first_of(const char* s, size_t pos = 0) const {
+	return to_find_first(data->_data, s, pos);
+}
+
+size_t My_String::find_first_of(const char* s, size_t pos, size_t n) const {
+	My_String tmp(n, pos);
+	return to_find_first(data->_data, tmp.get_data()->_data, pos);
+}
+
+size_t My_String::find_first_of(char c, size_t pos = 0) const noexcept {
+	char s[1];
+	s[0] = c;
+	return to_find_first(data->_data, s, pos);
+}
+
+size_t My_String::to_find_last(const char* s1, const char* s2, size_t pos) const {
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+	int i = pos, j = 0, res = npos;
+	for (; i < len1; i++) {
+		for (j = 0; j < len2; j++) {
+			if (*(s1 + i) == *(s2 + j)) {
+				break;
+			}
+		}
+		if (j < len2) res = i;
+	}
+	return res;
+}
+
+size_t My_String::find_last_of(const My_String& str, size_t pos = 0) const noexcept {
+	return to_find_last(data->_data, str.get_data()->_data, pos);
+}
+
+size_t My_String::find_last_of(const char* s, size_t pos = 0) const {
+	return to_find_last(data->_data, s, pos);
+}
+
+size_t My_String::find_last_of(const char* s, size_t pos, size_t n) const {
+	My_String tmp(n, pos);
+	return to_find_last(data->_data, tmp.get_data()->_data, pos);
+}
+
+size_t My_String::find_last_of(char c, size_t pos = 0) const noexcept {
+	char s[1];
+	s[0] = c;
+	return to_find_last(data->_data, s, pos);
+}
+
+size_t My_String::to_find_first_not(const char* s1, const char* s2, size_t pos) const {
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+	int i = pos, j = 0;
+	for (; i < len1; i++) {
+		for (j = 0; j < len2; j++) {
+			if (*(s1 + i) == *(s2 + j)) {
+				break;
+			}
+		}
+		if (j >= len2) return i;
+	}
+	return npos;
+}
+
+size_t My_String::find_first_not_of(const My_String& str, size_t pos = 0) const noexcept {
+	return to_find_first_not(data->_data, str.get_data()->_data, pos);
+}
+
+size_t My_String::find_first_not_of(const char* s, size_t pos = 0) const {
+	return to_find_first_not(data->_data, s, pos);
+}
+
+size_t My_String::find_first_not_of(const char* s, size_t pos, size_t n) const {
+	My_String tmp(n, pos);
+	return to_find_first_not(data->_data, tmp.get_data()->_data, pos);
+}
+
+size_t My_String::find_first_not_of(char c, size_t pos = 0) const noexcept {
+	char s[1];
+	s[0] = c;
+	return to_find_first_not(data->_data, s, pos);
+}
+
+size_t My_String::to_find_last_not(const char* s1, const char* s2, size_t pos) const {
+	int len1 = strlen(s1);
+	int len2 = strlen(s2);
+	int i = pos, j = 0, res = npos;
+	for (; i < len1; i++) {
+		for (j = 0; j < len2; j++) {
+			if (*(s1 + i) == *(s2 + j)) {
+				break;
+			}
+		}
+		if (j >= len2) res = i;
+	}
+	return res;
+}
+size_t My_String::find_last_not_of(const My_String& str, size_t pos = 0) const noexcept {
+	return to_find_last_not(data->_data, str.get_data()->_data, pos);
+}
+
+size_t My_String::find_last_not_of(const char* s, size_t pos = 0) const {
+	return to_find_last_not(data->_data, s, pos);
+}
+
+size_t My_String::find_last_not_of(const char* s, size_t pos, size_t n) const {
+	My_String tmp(n, pos);
+	return to_find_last_not(data->_data, tmp.get_data()->_data, pos);
+}
+
+size_t My_String::find_last_not_of(char c, size_t pos = 0) const noexcept {
+	char s[1];
+	s[0] = c;
+	return to_find_last_not(data->_data, s, pos);
+}
+
+My_String My_String::substr(size_t pos = 0, size_t len = npos) const {
+	My_String substring(*this, pos, len);
+	return substring;
+}
+
+int My_String::compare(const My_String& str) const noexcept {
+	return strcmp(data->_data, str.c_str());
+}
+
+int My_String::compare(size_t pos, size_t len, const My_String& str) const {
+	My_String tmp(data->_data, pos, len);
+	return tmp.compare(str);
+}
+
+int My_String::compare(size_t pos, size_t len, const My_String& str, size_t subpos, size_t sublen) const {
+	My_String tmp1(data->_data, pos, len);
+	My_String tmp2(str.c_str(), subpos, sublen);
+	return tmp1.compare(tmp2);
+}
+
+int My_String::compare(const char* s) const {
+	return strcmp(data->_data, s);
+}
+
+int My_String::compare(size_t pos, size_t len, const char* s) const {
+	My_String tmp(data->_data, pos, len);
+	return tmp.compare(s);
+}
+
+int My_String::compare(size_t pos, size_t len, const char* s, size_t n) const {
+	My_String tmp1(data->_data, pos, len);
+	My_String tmp2(s, n);
+	return tmp1.compare(tmp2);
+}
 
 //friend Non-member function overloads
-istream& getline(istream&  is, My_String& str, char delim);
+istream& getline(istream&  is, My_String& str, char delim) {
+
+}
+
 istream& getline(istream&& is, My_String& str, char delim);
 istream& getline(istream&  is, My_String& str);
 istream& getline(istream&& is, My_String& str);

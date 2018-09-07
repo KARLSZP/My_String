@@ -1,6 +1,6 @@
 #pragma once
 #include<iostream>
-#include<cMy_String>
+#include<cstring>
 #include"My_String.h"
 //#include<My_String>
 using namespace std;
@@ -91,40 +91,39 @@ public:
 
 	//My_String operations
 	const char* c_str() const;
-	const char* data() const;
 	size_t copy(char*, size_t, size_t);
 
-	size_t to_find(const char *,const char*, size_t) const;
+	size_t to_find(const char*,const char*, size_t) const;
 	size_t find(const My_String& str, size_t pos = 0) const noexcept;
 	size_t find(const char* s, size_t pos = 0) const;
 	size_t find(const char* s, size_t pos, size_t n) const;
 	size_t find(char c, size_t pos = 0) const noexcept;
 
-	size_t to_rfind(const char *, const char*, size_t) const;
+	size_t to_rfind(const char*, const char*, size_t) const;
 	size_t rfind(const My_String& str, size_t pos = 0) const noexcept;
 	size_t rfind(const char* s, size_t pos = 0) const;
 	size_t rfind(const char* s, size_t pos, size_t n) const;
 	size_t rfind(char c, size_t pos = 0) const noexcept;
 
-	size_t to_find_first(const char *, const char*, size_t) const;
+	size_t to_find_first(const char*, const char*, size_t) const;
 	size_t find_first_of(const My_String& str, size_t pos = 0) const noexcept;
 	size_t find_first_of(const char* s, size_t pos = 0) const;
 	size_t find_first_of(const char* s, size_t pos, size_t n) const;
 	size_t find_first_of(char c, size_t pos = 0) const noexcept;
 
-	size_t to_find_last(const char *, const char*, size_t) const;
+	size_t to_find_last(const char*, const char*, size_t) const;
 	size_t find_last_of(const My_String& str, size_t pos = npos) const noexcept;
 	size_t find_last_of(const char* s, size_t pos = npos) const;
 	size_t find_last_of(const char* s, size_t pos, size_t n) const;
 	size_t find_last_of(char c, size_t pos = npos) const noexcept;
 
-	size_t to_find_first_not(const char *, const char*, size_t) const;
+	size_t to_find_first_not(const char*, const char*, size_t) const;
 	size_t find_first_not_of(const My_String& str, size_t pos = 0) const noexcept;
 	size_t find_first_not_of(const char* s, size_t pos = 0) const;
 	size_t find_first_not_of(const char* s, size_t pos, size_t n) const;
 	size_t find_first_not_of(char c, size_t pos = 0) const noexcept;
 
-	size_t to_find_last_not(const char *, const char*, size_t) const;
+	size_t to_find_last_not(const char*, const char*, size_t) const;
 	size_t find_last_not_of(const My_String& str, size_t pos = npos) const noexcept;
 	size_t find_last_not_of(const char* s, size_t pos = npos) const;
 	size_t find_last_not_of(const char* s, size_t pos, size_t n) const;
