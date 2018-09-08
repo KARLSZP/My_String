@@ -139,46 +139,37 @@ public:
 	int compare(size_t pos, size_t len, const char* s, size_t n) const;
 
 	//friend Non-member function overloads
-	friend istream& getline(istream&  is, My_String& str, char delim);
-	friend istream& getline(istream&& is, My_String& str, char delim);
-	friend istream& getline(istream&  is, My_String& str);
-	friend istream& getline(istream&& is, My_String& str);
-
-	friend My_String operator+ (const My_String& lhs, const My_String& rhs);
-	friend My_String operator+ (My_String&&      lhs, My_String&&      rhs);
-	friend My_String operator+ (My_String&&      lhs, const My_String& rhs);
-	friend My_String operator+ (const My_String& lhs, My_String&&      rhs);
-	friend My_String operator+ (const My_String& lhs, const char*   rhs);
-	friend My_String operator+ (My_String&&      lhs, const char*   rhs);
-	friend My_String operator+ (const char*   lhs, const My_String& rhs);
-	friend My_String operator+ (const char*   lhs, My_String&&      rhs);
-	friend My_String operator+ (const My_String& lhs, char          rhs);
-	friend My_String operator+ (My_String&&      lhs, char          rhs);
-	friend My_String operator+ (char          lhs, const My_String& rhs);
-	friend My_String operator+ (char          lhs, My_String&&      rhs);
-
 	friend istream& operator>> (istream& is, My_String& str);
 	friend ostream& operator<< (ostream& os, const My_String& str);
+	friend istream& getline(istream& is, My_String& str, char delim);
+	friend istream& getline(istream& is, My_String& str);
+
+	friend My_String operator+ (const My_String& lhs, const My_String& rhs);
+	friend My_String operator+ (const My_String& lhs, const char* rhs);
+	friend My_String operator+ (const char* lhs, const My_String& rhs);
+	friend My_String operator+ (const My_String& lhs, char rhs);
+	friend My_String operator+ (char lhs, const My_String& rhs);
+
 	friend void swap(My_String& x, My_String& y);
 
 	friend bool operator==(const My_String& lhs, const My_String& rhs);
-	friend bool operator==(const char*   lhs, const My_String& rhs);
-	friend bool operator==(const My_String& lhs, const char*   rhs);
+	friend bool operator==(const char* lhs, const My_String& rhs);
+	friend bool operator==(const My_String& lhs, const char* rhs);
 	friend bool operator!=(const My_String& lhs, const My_String& rhs);
-	friend bool operator!=(const char*   lhs, const My_String& rhs);
-	friend bool operator!=(const My_String& lhs, const char*   rhs);
+	friend bool operator!=(const char* lhs, const My_String& rhs);
+	friend bool operator!=(const My_String& lhs, const char* rhs);
 	friend bool operator< (const My_String& lhs, const My_String& rhs);
-	friend bool operator< (const char*   lhs, const My_String& rhs);
-	friend bool operator< (const My_String& lhs, const char*   rhs);
+	friend bool operator< (const char* lhs, const My_String& rhs);
+	friend bool operator< (const My_String& lhs, const char* rhs);
 	friend bool operator<=(const My_String& lhs, const My_String& rhs);
-	friend bool operator<=(const char*   lhs, const My_String& rhs);
-	friend bool operator<=(const My_String& lhs, const char*   rhs);
+	friend bool operator<=(const char* lhs, const My_String& rhs);
+	friend bool operator<=(const My_String& lhs, const char* rhs);
 	friend bool operator> (const My_String& lhs, const My_String& rhs);
-	friend bool operator> (const char*   lhs, const My_String& rhs);
-	friend bool operator> (const My_String& lhs, const char*   rhs);
+	friend bool operator> (const char* lhs, const My_String& rhs);
+	friend bool operator> (const My_String& lhs, const char* rhs);
 	friend bool operator>=(const My_String& lhs, const My_String& rhs);
-	friend bool operator>=(const char*   lhs, const My_String& rhs);
-	friend bool operator>=(const My_String& lhs, const char*   rhs);
+	friend bool operator>=(const char* lhs, const My_String& rhs);
+	friend bool operator>=(const My_String& lhs, const char* rhs);
 
 private:
 	My_String_Data * data;

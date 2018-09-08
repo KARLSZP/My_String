@@ -763,47 +763,195 @@ int My_String::compare(size_t pos, size_t len, const char* s, size_t n) const {
 }
 
 //friend Non-member function overloads
-istream& getline(istream&  is, My_String& str, char delim) {
-
+istream& operator>> (istream& is, My_String& str) {
+	char buf[npos];
+	cin >> buf;
+	My_String tmp(buf);
+	str = tmp;
+	return is;
 }
 
-istream& getline(istream&& is, My_String& str, char delim);
-istream& getline(istream&  is, My_String& str);
-istream& getline(istream&& is, My_String& str);
+ostream& operator<< (ostream& os, const My_String& str) {
+	os << str.c_str();
+	return os;
+}
 
-My_String operator+ (const My_String& lhs, const My_String& rhs);
-My_String operator+ (My_String&&      lhs, My_String&&      rhs);
-My_String operator+ (My_String&&      lhs, const My_String& rhs);
-My_String operator+ (const My_String& lhs, My_String&&      rhs);
-My_String operator+ (const My_String& lhs, const char*   rhs);
-My_String operator+ (My_String&&      lhs, const char*   rhs);
-My_String operator+ (const char*   lhs, const My_String& rhs);
-My_String operator+ (const char*   lhs, My_String&&      rhs);
-My_String operator+ (const My_String& lhs, char          rhs);
-My_String operator+ (My_String&&      lhs, char          rhs);
-My_String operator+ (char          lhs, const My_String& rhs);
-My_String operator+ (char          lhs, My_String&&      rhs);
+istream& getline(istream& is, My_String& str, char delim) {
+	char buf[npos];
+	cin.get(buf, delim);
+	My_String tmp(buf);
+	str = tmp;
+	return is;
+}
 
-istream& operator>> (istream& is, My_String& str);
-ostream& operator<< (ostream& os, const My_String& str);
-void swap(My_String& x, My_String& y);
+istream& getline(istream& is, My_String& str) {
+	char buf[npos];
+	cin.get(buf, '\n');
+	My_String tmp(buf);
+	str = tmp;
+	return is;
+}
 
-bool operator==(const My_String& lhs, const My_String& rhs);
-bool operator==(const char*   lhs, const My_String& rhs);
-bool operator==(const My_String& lhs, const char*   rhs);
-bool operator!=(const My_String& lhs, const My_String& rhs);
-bool operator!=(const char*   lhs, const My_String& rhs);
-bool operator!=(const My_String& lhs, const char*   rhs);
-bool operator< (const My_String& lhs, const My_String& rhs);
-bool operator< (const char*   lhs, const My_String& rhs);
-bool operator< (const My_String& lhs, const char*   rhs);
-bool operator<=(const My_String& lhs, const My_String& rhs);
-bool operator<=(const char*   lhs, const My_String& rhs);
-bool operator<=(const My_String& lhs, const char*   rhs);
-bool operator> (const My_String& lhs, const My_String& rhs);
-bool operator> (const char*   lhs, const My_String& rhs);
-bool operator> (const My_String& lhs, const char*   rhs);
-bool operator>=(const My_String& lhs, const My_String& rhs);
-bool operator>=(const char*   lhs, const My_String& rhs);
-bool operator>=(const My_String& lhs, const char*   rhs);
+My_String operator+ (const My_String& lhs, const My_String& rhs) {
+	My_String tmp(lhs);
+	tmp += rhs;
+	return tmp;
+}
+
+My_String operator+ (const My_String& lhs, const char* rhs) {
+	My_String tmp(lhs);
+	tmp += rhs;
+	return tmp;
+}
+My_String operator+ (const char* lhs, const My_String& rhs) {
+	My_String tmp(lhs);
+	tmp += rhs;
+	return tmp;
+}
+
+My_String operator+ (const My_String& lhs, char rhs) {
+	My_String tmp(lhs);
+	tmp += rhs;
+	return tmp;
+}
+
+My_String operator+ (char lhs, const My_String& rhs) {
+	My_String tmp(1, lhs);
+	tmp += rhs;
+	return tmp;
+}
+
+
+void swap(My_String& x, My_String& y) {
+	My_String tmp = x;
+	x = y;
+	y = tmp;
+}
+
+bool operator==(const My_String& lhs, const My_String& rhs) {
+	if (!lhs.compare(rhs)) {
+		return true;
+	}
+	return false;
+}
+
+bool operator==(const char* lhs, const My_String& rhs) {
+	if (!rhs.compare(lhs)) {
+		return true;
+	}
+	return false;
+}
+
+bool operator==(const My_String& lhs, const char* rhs) {
+	if (!lhs.compare(rhs)) {
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const My_String& lhs, const My_String& rhs) {
+	if (lhs.compare(rhs)) {
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const char* lhs, const My_String& rhs) {
+	if (rhs.compare(lhs)) {
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const My_String& lhs, const char* rhs) {
+	if (lhs.compare(rhs)) {
+		return true;
+	}
+	return false;
+}
+
+bool operator< (const My_String& lhs, const My_String& rhs) {
+	if (lhs.compare(rhs) < 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator< (const char* lhs, const My_String& rhs) {
+	if (rhs.compare(lhs) > 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator< (const My_String& lhs, const char* rhs) {
+	if (lhs.compare(rhs) < 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator<=(const My_String& lhs, const My_String& rhs) {
+	if (lhs.compare(rhs) <= 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator<=(const char* lhs, const My_String& rhs) {
+	if (rhs.compare(lhs) >= 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator<=(const My_String& lhs, const char* rhs) {
+	if (lhs.compare(rhs) <= 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator> (const My_String& lhs, const My_String& rhs) {
+	if (lhs.compare(rhs) > 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator> (const char* lhs, const My_String& rhs) {
+	if (rhs.compare(lhs) < 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator> (const My_String& lhs, const char* rhs) {
+	if (lhs.compare(rhs) > 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator>=(const My_String& lhs, const My_String& rhs) {
+	if (lhs.compare(rhs) >= 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator>=(const char* lhs, const My_String& rhs) {
+	if (rhs.compare(lhs) <= 0) {
+		return true;
+	}
+	return false;
+}
+
+bool operator>=(const My_String& lhs, const char* rhs) {
+	if (lhs.compare(rhs) >= 0) {
+		return true;
+	}
+	return false;
+}
+
 #endif // !My_String_H
