@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #ifndef My_String_H
 #define My_String_H
 
@@ -5,10 +6,11 @@
 
 //constructors
 My_String::My_String() {
+	data = new My_String_Data;
 	data->_data = new char[1];
 	data->capacity = 1;
 	data->length = 0;
-	data->_data = '\0';
+	data->_data[0] = '\0';
 }
 
 My_String::My_String(const My_String& str) {
@@ -184,11 +186,6 @@ char& My_String::back() {
 
 const char& My_String::back() const {
 	return data->_data[data->length - 1];
-}
-
-
-const char* My_String::c_str() const {
-	return data->_data;
 }
 
 const My_String_Data* My_String::get_data() const {
@@ -434,7 +431,7 @@ My_String& My_String::insert(size_t pos, size_t num, char chr) {
 	return *this;
 }
 
-My_String& My_String::erase(size_t pos, size_t num = npos) {
+My_String& My_String::erase(size_t pos = 0, size_t num = npos) {
 	My_String str_f(*this, 0, pos);
 	if (num < data->length) {
 		My_String str_b(*this, pos + num);
@@ -548,7 +545,7 @@ size_t My_String::find(const char* s, size_t pos = 0) const {
 }
 
 size_t My_String::find(const char* s, size_t pos, size_t n) const {
-	My_String tmp(n, pos);
+	My_String tmp(s, n);
 	return to_find(data->_data, tmp.get_data()->_data, pos);
 }
 
@@ -583,7 +580,7 @@ size_t My_String::rfind(const char* s, size_t pos = 0) const {
 }
 
 size_t My_String::rfind(const char* s, size_t pos, size_t n) const {
-	My_String tmp(n, pos);
+	My_String tmp(s, n);
 	return to_rfind(data->_data, tmp.get_data()->_data, pos);
 }
 
@@ -594,11 +591,11 @@ size_t My_String::rfind(char c, size_t pos = 0) const noexcept {
 }
 
 size_t My_String::to_find_first(const char * s1, const char* s2, size_t pos) const {
-	int len1 = strlen(s1);
-	int len2 = strlen(s2);
-	int i = pos, j = 0;
+	size_t len1 = strlen(s1);
+	size_t len2 = strlen(s2);
+	size_t i = pos, j = 0;
 	for (; i < len1; i++) {
-		for (size_t j = 0; j < len2; j++) {
+		for (j = 0; j < len2; j++) {
 			if (*(s1 + i) == *(s2 + j)) {
 				return i;
 			}
@@ -616,7 +613,7 @@ size_t My_String::find_first_of(const char* s, size_t pos = 0) const {
 }
 
 size_t My_String::find_first_of(const char* s, size_t pos, size_t n) const {
-	My_String tmp(n, pos);
+	My_String tmp(s, n);
 	return to_find_first(data->_data, tmp.get_data()->_data, pos);
 }
 
@@ -650,7 +647,7 @@ size_t My_String::find_last_of(const char* s, size_t pos = 0) const {
 }
 
 size_t My_String::find_last_of(const char* s, size_t pos, size_t n) const {
-	My_String tmp(n, pos);
+	My_String tmp(s, n);
 	return to_find_last(data->_data, tmp.get_data()->_data, pos);
 }
 
@@ -684,7 +681,7 @@ size_t My_String::find_first_not_of(const char* s, size_t pos = 0) const {
 }
 
 size_t My_String::find_first_not_of(const char* s, size_t pos, size_t n) const {
-	My_String tmp(n, pos);
+	My_String tmp(s, n);
 	return to_find_first_not(data->_data, tmp.get_data()->_data, pos);
 }
 
@@ -717,7 +714,7 @@ size_t My_String::find_last_not_of(const char* s, size_t pos = 0) const {
 }
 
 size_t My_String::find_last_not_of(const char* s, size_t pos, size_t n) const {
-	My_String tmp(n, pos);
+	My_String tmp(s, n);
 	return to_find_last_not(data->_data, tmp.get_data()->_data, pos);
 }
 
@@ -764,10 +761,13 @@ int My_String::compare(size_t pos, size_t len, const char* s, size_t n) const {
 
 //friend Non-member function overloads
 istream& operator>> (istream& is, My_String& str) {
-	char buf[npos];
-	cin >> buf;
-	My_String tmp(buf);
-	str = tmp;
+	str.erase();
+	char ch;
+	is >> ch;
+	while (ch != ' '&&ch != '\t'&&ch != '\n') {
+		str.append(1, ch);
+		is >> ch;
+	}
 	return is;
 }
 
@@ -777,18 +777,20 @@ ostream& operator<< (ostream& os, const My_String& str) {
 }
 
 istream& getline(istream& is, My_String& str, char delim) {
-	char buf[npos];
-	cin.get(buf, delim);
-	My_String tmp(buf);
-	str = tmp;
+	str.erase();
+	char ch;
+	while (is.get(ch) && ch != delim) {
+		str.append(1, ch);
+	}
 	return is;
 }
 
 istream& getline(istream& is, My_String& str) {
-	char buf[npos];
-	cin.get(buf, '\n');
-	My_String tmp(buf);
-	str = tmp;
+	str.erase();
+	char ch;
+	while (is.get(ch) && ch != '\n') {
+		str.append(1, ch);
+	}
 	return is;
 }
 
