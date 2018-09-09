@@ -6,8 +6,9 @@ using String = My_String;
 
 int main() {
 	String str;
-	cin >> str;
-	cout << str;
+	String sub = "dsd";
+	str = sub;
+	cout << str.at(3) << endl;
 	system("pause");
 	return 0;
 }

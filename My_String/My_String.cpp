@@ -14,17 +14,24 @@ My_String::My_String() {
 }
 
 My_String::My_String(const My_String& str) {
+	data = new My_String_Data;
 	data->_data = new char[str.get_data()->capacity];
 	data->capacity = str.get_data()->capacity;
 	data->length = str.get_data()->length;
 	strcpy(data->_data, str.get_data()->_data);
+	//assign(str);
 }
 
-My_String::My_String(const My_String& str, size_t pos, size_t num = npos) {
+My_String::My_String(const My_String& str, size_t pos, size_t num) {
+	data = new My_String_Data;
+	data->capacity = 1;
+	data->length = 0;
+	data->_data = new char[1];
 	assign(str, pos, num);
 }
 
 My_String::My_String(const char* str) {
+	data = new My_String_Data;
 	size_t len = strlen(str);
 	data->_data = new char[len + 1];
 	data->capacity = len + 1;
@@ -32,12 +39,18 @@ My_String::My_String(const char* str) {
 	strcpy(data->_data, str);
 }
 My_String::My_String(const char* str, size_t num) {
+	data = new My_String_Data;
 	data->_data = new char[num + 1];
 	data->capacity = num + 1;
 	data->length = num;
 	strncpy(data->_data, str, num);
+	data->_data[data->length] = '\0';
 }
 My_String::My_String(size_t num, char chr) {
+	if (num < 0) {
+		throw(out_of_range("Invalid Position!"));
+	}
+	data = new My_String_Data;
 	data->_data = new char[num + 1];
 	data->capacity = num + 1;
 	data->length = num;
@@ -50,6 +63,7 @@ My_String::My_String(size_t num, char chr) {
 //destructor
 My_String::~My_String() {
 	delete[] data->_data;
+	delete data;
 }
 
 //operator=
@@ -111,6 +125,7 @@ void My_String::resize(size_t num) {
 	else {
 		data->_data = new char[num];
 		strncpy(data->_data, buf, num - 1);
+		data->_data[num] = '\0';
 	}
 	data->capacity = num;
 	delete[] buf;
@@ -143,7 +158,7 @@ const char& My_String::operator[](size_t pos) const {
 }
 
 char& My_String::at(size_t pos) {
-	if (pos >= data->length) {
+	if (pos >= data->length || pos < 0) {
 		throw(out_of_range("Invalid Position!"));
 	}
 	else {
@@ -333,7 +348,7 @@ void My_String::assign(const My_String& str) {
 }
 
 void My_String::assign(const My_String& str, size_t pos, size_t num) {
-	if (pos >= data->length) {
+	if (pos > str.data->length || num < 0 || pos < 0) {
 		throw(out_of_range("Invalid Position!"));
 	}
 	delete[] data->_data;
@@ -383,7 +398,7 @@ My_String& My_String::insert(size_t pos, My_String& str) {
 	str_f += str;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -394,7 +409,7 @@ My_String& My_String::insert(size_t pos_ins, My_String& str, size_t pos, size_t 
 	str_f += str_ins;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -404,7 +419,7 @@ My_String& My_String::insert(size_t pos, const char* str) {
 	str_f += str;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -415,7 +430,7 @@ My_String& My_String::insert(size_t pos_ins, const char* str, size_t num) {
 	str_f += str_ins;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -427,18 +442,18 @@ My_String& My_String::insert(size_t pos, size_t num, char chr) {
 	}
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
 My_String& My_String::erase(size_t pos = 0, size_t num = npos) {
+	//size_t erase_len = data->length > num ? num - pos : data->length - pos;
 	My_String str_f(*this, 0, pos);
 	if (num < data->length) {
 		My_String str_b(*this, pos + num);
 		str_f += str_b;
 	}
-	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -448,7 +463,7 @@ My_String& My_String::replace(size_t pos, size_t len, const My_String& str) {
 	str_f += str;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -459,7 +474,7 @@ My_String& My_String::replace(size_t pos, size_t len, const My_String& str, size
 	str_f += str_rep;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -469,7 +484,7 @@ My_String& My_String::replace(size_t pos, size_t len, const char* str) {
 	str_f += str;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -480,7 +495,7 @@ My_String& My_String::replace(size_t pos, size_t len, const char* str, size_t nu
 	str_f += str_rep;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -491,7 +506,7 @@ My_String& My_String::replace(size_t pos, size_t len, size_t num, const char chr
 	str_f += str_rep;
 	str_f += str_b;
 	delete[] data->_data;
-	*this = str_f;
+	assign(str_f);
 	return *this;
 }
 
@@ -766,7 +781,7 @@ istream& operator>> (istream& is, My_String& str) {
 	is >> ch;
 	while (ch != ' '&&ch != '\t'&&ch != '\n') {
 		str.append(1, ch);
-		is >> ch;
+		ch = is.get();
 	}
 	return is;
 }

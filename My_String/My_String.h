@@ -17,29 +17,29 @@ struct My_String_Data
 class My_String {
 public:
 	//constructors
-	My_String();
-	My_String(const My_String&);
-	My_String(const My_String&, size_t, size_t);
-	My_String(const char*);
-	My_String(const char*, size_t);
-	My_String(size_t, char);
+	My_String();//¡Ì
+	My_String(const My_String&);//¡Ì
+	My_String(const My_String&, size_t, size_t num= npos);//¡Ì
+	My_String(const char*);//¡Ì
+	My_String(const char*, size_t);//¡Ì
+	My_String(size_t, char);//¡Ì
 
 	//destructor
-	~My_String();
+	~My_String();//¡Ì
 
 	//operator=
-	My_String& operator=(const My_String&);
-	My_String& operator=(const char*);
-	My_String& operator=(const char);
+	My_String& operator=(const My_String&);//¡Ì
+	My_String& operator=(const char*);//¡Ì
+	My_String& operator=(const char);//¡Ì
 
 	//size & capacity
-	size_t size() const;
-	size_t length() const;
-	size_t capacity() const;
-	bool empty() const;
-	void resize(size_t);
-	void reserve(size_t);
-	void clear();
+	size_t size() const;//¡Ì
+	size_t length() const;//¡Ì
+	size_t capacity() const;//¡Ì
+	bool empty() const;//¡Ì
+	void resize(size_t);//¡Ì
+	void reserve(size_t);//¡Ì
+	void clear();//¡Ì
 
 	//access to elements
 	char& operator[](size_t);
