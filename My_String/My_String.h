@@ -42,52 +42,51 @@ public:
 	void clear();//¡Ì
 
 	//access to elements
-	char& operator[](size_t);
-	const char& operator[](size_t) const;
-	char& at(size_t);
-	const char& at(size_t) const;
-	char& front();
-	const char& front() const;
-	char& back();
-	const char& back() const;
-	char* c_str();
-	const My_String_Data* get_data() const;
+	char& operator[](size_t);//¡Ì
+	const char& operator[](size_t) const;//¡Ì
+	char& at(size_t);//¡Ì
+	const char& at(size_t) const;//¡Ì
+	char& front();//¡Ì
+	const char& front() const;//¡Ì
+	char& back();//¡Ì
+	const char& back() const;//¡Ì
+	const My_String_Data* get_data() const;//¡Ì
 
 	//modifiers
-	My_String& operator+=(const My_String&);
-	My_String& operator+=(const char*);
-	My_String& operator+=(const char);
+	My_String& operator+=(const My_String&);//¡Ì
+	My_String& operator+=(const char*);//¡Ì
+	My_String& operator+=(const char);//¡Ì
 
-	void append(const My_String&);
-	void append(const My_String&, size_t, size_t);
-	void append(const char*);
-	void append(const char*, size_t);
-	void append(size_t, char);
+	void append(const My_String&);//¡Ì
+	void append(const My_String&, size_t, size_t num = npos);//¡Ì
+	void append(const char*);//¡Ì
+	void append(const char*, size_t);//¡Ì
+	void append(size_t, char);//¡Ì
 
-	void push_back(const char);
+	void push_back(const char);//¡Ì
 
-	void assign(const My_String&);
-	void assign(const My_String&, size_t, size_t);
-	void assign(const char*);
-	void assign(const char*, size_t);
-	void assign(size_t, char);
+	void assign(const My_String&);//¡Ì
+	void assign(const My_String&, size_t, size_t num = npos);//¡Ì
+	void assign(const char*);//¡Ì
+	void assign(const char*, size_t);//¡Ì
+	void assign(size_t, char);//¡Ì
 
-	My_String& insert(size_t, My_String&);
-	My_String& insert(size_t, My_String&, size_t, size_t);
-	My_String& insert(size_t, const char*);
-	My_String& insert(size_t, const char*, size_t);
-	My_String& insert(size_t, size_t, char);
+	My_String& insert(size_t, My_String&);//¡Ì
+	My_String& insert(size_t, My_String&, size_t, size_t sublen = npos);//¡Ì
+	My_String& insert(size_t, const char*);//¡Ì
+	My_String& insert(size_t, const char*, size_t);//¡Ì
+	My_String& insert(size_t, size_t, char);//¡Ì
 
-	My_String& erase(size_t, size_t);
+	My_String& erase(size_t, size_t);//¡Ì
 
-	My_String& replace(size_t, size_t, const My_String&);
-	My_String& replace(size_t, size_t, const My_String&, size_t, size_t);
-	My_String& replace(size_t, size_t, const char*);
-	My_String& replace(size_t, size_t, const char*, size_t);
-	My_String& replace(size_t, size_t, size_t, const char);
+	My_String& replace(size_t, size_t, const My_String&);//¡Ì
+	My_String& replace(size_t, size_t, const My_String&, size_t, size_t sublen = npos);//¡Ì
+	My_String& replace(size_t, size_t, const char*);//¡Ì
+	My_String& replace(size_t, size_t, const char*, size_t);//¡Ì
+	My_String& replace(size_t, size_t, size_t, const char);//¡Ì
 
-	void swap(My_String&);
-	char pop_back();
+	void swap(My_String&);//¡Ì
+	char pop_back();//¡Ì
 
 	//My_String operations
 	const char* c_str() const;

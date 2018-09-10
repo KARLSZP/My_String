@@ -246,16 +246,7 @@ My_String& My_String::operator+=(const char chr) {
 		data->_data[data->length + 1] = '\0';
 	}
 	else {
-		char* buf = new char[data->capacity];
-		strcpy(buf, data->_data);
-		delete[] data->_data;
-		data->_data = new char[data->length + 1];
-		strcpy(data->_data, buf);
-		data->_data[data->length] = chr;
-		data->_data[data->length + 1] = '\0';
-		data->capacity = data->length + 1;
-		data->length = data->length + 1;
-		delete[] buf;		
+		append(1, chr);
 	}
 	return *this;
 }
@@ -276,7 +267,9 @@ void My_String::append(const My_String& str) {
 }
 
 void My_String::append(const My_String& str, size_t pos, size_t num) {
-	char* buf = new char[data->capacity];
+	My_String app(str, pos, num);
+	append(app);
+	/*char* buf = new char[data->capacity];
 	strcpy(buf, data->_data);
 	delete[] data->_data;
 	data->_data = new char[data->capacity + num];
@@ -287,7 +280,7 @@ void My_String::append(const My_String& str, size_t pos, size_t num) {
 	data->_data[data->length + num] = '\0';
 	data->capacity = data->capacity + num;
 	data->length = data->length + num;
-	delete[] buf;
+	delete[] buf;*/
 }
 
 void My_String::append(const char* str) {
@@ -397,7 +390,6 @@ My_String& My_String::insert(size_t pos, My_String& str) {
 	My_String str_b(*this, pos);
 	str_f += str;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -408,7 +400,6 @@ My_String& My_String::insert(size_t pos_ins, My_String& str, size_t pos, size_t 
 	My_String str_ins(str, pos, num);
 	str_f += str_ins;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -418,7 +409,6 @@ My_String& My_String::insert(size_t pos, const char* str) {
 	My_String str_b(*this, pos);
 	str_f += str;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -429,7 +419,6 @@ My_String& My_String::insert(size_t pos_ins, const char* str, size_t num) {
 	My_String str_ins(str, num);
 	str_f += str_ins;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -441,7 +430,6 @@ My_String& My_String::insert(size_t pos, size_t num, char chr) {
 		str_f += chr;
 	}
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -462,7 +450,6 @@ My_String& My_String::replace(size_t pos, size_t len, const My_String& str) {
 	My_String str_b(*this, pos + len);
 	str_f += str;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -473,7 +460,6 @@ My_String& My_String::replace(size_t pos, size_t len, const My_String& str, size
 	My_String str_rep(str, subpos, sublen);
 	str_f += str_rep;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -483,7 +469,6 @@ My_String& My_String::replace(size_t pos, size_t len, const char* str) {
 	My_String str_b(*this, pos + len);
 	str_f += str;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -494,7 +479,6 @@ My_String& My_String::replace(size_t pos, size_t len, const char* str, size_t nu
 	My_String str_rep(str, num);
 	str_f += str_rep;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
@@ -505,18 +489,23 @@ My_String& My_String::replace(size_t pos, size_t len, size_t num, const char chr
 	My_String str_rep(num, chr);
 	str_f += str_rep;
 	str_f += str_b;
-	delete[] data->_data;
 	assign(str_f);
 	return *this;
 }
 
 void My_String::swap(My_String& str) {
 	My_String tmp(*this);
-
+	assign(str);
+	str = tmp;
 }
 
 char My_String::pop_back() {
-	data->length--;
+	if (data->length > 0) {
+		data->length--;
+	}
+	else {
+		return '\0';
+	}
 	char tmp = data->_data[data->length];
 	data->_data[data->length] = '\0';
 	return tmp;

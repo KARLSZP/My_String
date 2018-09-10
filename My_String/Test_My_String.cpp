@@ -5,10 +5,12 @@ using namespace std;
 using String = My_String;
 
 int main() {
-	String str;
-	String sub = "dsd";
-	str = sub;
-	cout << str.at(3) << endl;
+	String str = "abcdefghijklmn";
+	String sub = "123456";
+	str.pop_back();
+	//str += "1212";
+	//str += 'q';
+	cout << str << endl << sub;
 	system("pause");
 	return 0;
 }
