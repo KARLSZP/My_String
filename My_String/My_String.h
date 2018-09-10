@@ -89,7 +89,7 @@ public:
 	char pop_back();//¡Ì
 
 	//My_String operations
-	const char* c_str() const;
+	const char* c_str() const;//¡Ì
 	size_t copy(char*, size_t, size_t);
 
 	size_t to_find(const char*,const char*, size_t) const;
