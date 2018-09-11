@@ -99,49 +99,49 @@ public:
 	size_t find(char c, size_t pos = 0) const noexcept;//¡Ì
 
 	size_t to_rfind(const char*, const char*, size_t) const;//¡Ì
-	size_t rfind(const My_String& str, size_t pos) const noexcept;//¡Ì
-	size_t rfind(const char* s, size_t pos) const;//¡Ì
+	size_t rfind(const My_String& str, size_t pos = npos) const noexcept;//¡Ì
+	size_t rfind(const char* s, size_t pos = npos) const;//¡Ì
 	size_t rfind(const char* s, size_t pos, size_t n) const;//¡Ì
-	size_t rfind(char c, size_t pos) const noexcept;//¡Ì
+	size_t rfind(char c, size_t pos = npos) const noexcept;//¡Ì
 
-	size_t to_find_first(const char*, const char*, size_t) const;
-	size_t find_first_of(const My_String& str, size_t pos) const noexcept;
-	size_t find_first_of(const char* s, size_t pos) const;
-	size_t find_first_of(const char* s, size_t pos, size_t n) const;
-	size_t find_first_of(char c, size_t pos) const noexcept;
+	size_t to_find_first(const char*, const char*, size_t) const;//¡Ì
+	size_t find_first_of(const My_String& str, size_t pos = 0) const noexcept;//¡Ì
+	size_t find_first_of(const char* s, size_t pos = 0) const;//¡Ì
+	size_t find_first_of(const char* s, size_t pos, size_t n) const;//¡Ì
+	size_t find_first_of(char c, size_t pos = 0) const noexcept;//¡Ì
 
-	size_t to_find_last(const char*, const char*, size_t) const;
-	size_t find_last_of(const My_String& str, size_t pos) const noexcept;
-	size_t find_last_of(const char* s, size_t pos) const;
-	size_t find_last_of(const char* s, size_t pos, size_t n) const;
-	size_t find_last_of(char c, size_t pos) const noexcept;
+	size_t to_find_last(const char*, const char*, size_t) const;//¡Ì
+	size_t find_last_of(const My_String& str, size_t pos = npos) const noexcept;//¡Ì
+	size_t find_last_of(const char* s, size_t pos = npos) const;//¡Ì
+	size_t find_last_of(const char* s, size_t pos, size_t n) const;//¡Ì
+	size_t find_last_of(char c, size_t pos = npos) const noexcept;//¡Ì
 
-	size_t to_find_first_not(const char*, const char*, size_t) const;
-	size_t find_first_not_of(const My_String& str, size_t pos) const noexcept;
-	size_t find_first_not_of(const char* s, size_t pos) const;
-	size_t find_first_not_of(const char* s, size_t pos, size_t n) const;
-	size_t find_first_not_of(char c, size_t pos) const noexcept;
+	size_t to_find_first_not(const char*, const char*, size_t) const;//¡Ì
+	size_t find_first_not_of(const My_String& str, size_t pos = 0) const noexcept;//¡Ì
+	size_t find_first_not_of(const char* s, size_t pos = 0) const;//¡Ì
+	size_t find_first_not_of(const char* s, size_t pos, size_t n) const;//¡Ì
+	size_t find_first_not_of(char c, size_t pos = 0) const noexcept;//¡Ì
 
-	size_t to_find_last_not(const char*, const char*, size_t) const;
-	size_t find_last_not_of(const My_String& str, size_t pos) const noexcept;
-	size_t find_last_not_of(const char* s, size_t pos) const;
-	size_t find_last_not_of(const char* s, size_t pos, size_t n) const;
-	size_t find_last_not_of(char c, size_t pos) const noexcept;
+	size_t to_find_last_not(const char*, const char*, size_t) const;//¡Ì
+	size_t find_last_not_of(const My_String& str, size_t pos = npos) const noexcept;//¡Ì
+	size_t find_last_not_of(const char* s, size_t pos = npos) const;//¡Ì
+	size_t find_last_not_of(const char* s, size_t pos, size_t n) const;//¡Ì
+	size_t find_last_not_of(char c, size_t pos = npos) const noexcept;//¡Ì
 
-	My_String substr(size_t pos, size_t len) const;
+	My_String substr(size_t pos, size_t len) const;//¡Ì
 
-	int compare(const My_String& str) const noexcept;
-	int compare(size_t pos, size_t len, const My_String& str) const;
-	int compare(size_t pos, size_t len, const My_String& str, size_t subpos, size_t sublen) const;
-	int compare(const char* s) const;
-	int compare(size_t pos, size_t len, const char* s) const;
-	int compare(size_t pos, size_t len, const char* s, size_t n) const;
+	int compare(const My_String& str) const noexcept;//¡Ì
+	int compare(size_t pos, size_t len, const My_String& str) const;//¡Ì
+	int compare(size_t pos, size_t len, const My_String& str, size_t subpos, size_t sublen) const;//¡Ì
+	int compare(const char* s) const;//¡Ì
+	int compare(size_t pos, size_t len, const char* s) const;//¡Ì
+	int compare(size_t pos, size_t len, const char* s, size_t n) const;//¡Ì
 
 	//friend Non-member function overloads
-	friend istream& operator>> (istream& is, My_String& str);
-	friend ostream& operator<< (ostream& os, const My_String& str);
-	friend istream& getline(istream& is, My_String& str, char delim);
-	friend istream& getline(istream& is, My_String& str);
+	friend istream& operator>> (istream& is, My_String& str);//¡Ì
+	friend ostream& operator<< (ostream& os, const My_String& str);//¡Ì
+	friend istream& getline(istream& is, My_String& str, char delim);//¡Ì
+	friend istream& getline(istream& is, My_String& str);//¡Ì
 
 	friend My_String operator+ (const My_String& lhs, const My_String& rhs);
 	friend My_String operator+ (const My_String& lhs, const char* rhs);

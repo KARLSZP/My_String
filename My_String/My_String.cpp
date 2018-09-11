@@ -582,11 +582,11 @@ size_t My_String::to_rfind(const char * s1, const char* s2, size_t pos) const {
 	}
 	return j ? npos : i + 1;
 }
-size_t My_String::rfind(const My_String& str, size_t pos = 0) const noexcept {
+size_t My_String::rfind(const My_String& str, size_t pos) const noexcept {
 	return to_rfind(data->_data, str.get_data()->_data, pos);
 }
 
-size_t My_String::rfind(const char* s, size_t pos = 0) const {
+size_t My_String::rfind(const char* s, size_t pos) const {
 	return to_rfind(data->_data, s, pos);
 }
 
@@ -595,7 +595,7 @@ size_t My_String::rfind(const char* s, size_t pos, size_t n) const {
 	return to_rfind(data->_data, tmp.get_data()->_data, pos);
 }
 
-size_t My_String::rfind(char c, size_t pos = 0) const noexcept {
+size_t My_String::rfind(char c, size_t pos) const noexcept {
 	char s[1];
 	s[0] = c;
 	return to_rfind(data->_data, s, pos);
@@ -615,11 +615,11 @@ size_t My_String::to_find_first(const char * s1, const char* s2, size_t pos) con
 	return npos;
 }
 
-size_t My_String::find_first_of(const My_String& str, size_t pos = 0) const noexcept {
+size_t My_String::find_first_of(const My_String& str, size_t pos) const noexcept {
 	return to_find_first(data->_data, str.get_data()->_data, pos);
 }
 
-size_t My_String::find_first_of(const char* s, size_t pos = 0) const {
+size_t My_String::find_first_of(const char* s, size_t pos) const {
 	return to_find_first(data->_data, s, pos);
 }
 
@@ -628,7 +628,7 @@ size_t My_String::find_first_of(const char* s, size_t pos, size_t n) const {
 	return to_find_first(data->_data, tmp.get_data()->_data, pos);
 }
 
-size_t My_String::find_first_of(char c, size_t pos = 0) const noexcept {
+size_t My_String::find_first_of(char c, size_t pos) const noexcept {
 	char s[1];
 	s[0] = c;
 	return to_find_first(data->_data, s, pos);
@@ -637,8 +637,8 @@ size_t My_String::find_first_of(char c, size_t pos = 0) const noexcept {
 size_t My_String::to_find_last(const char* s1, const char* s2, size_t pos) const {
 	int len1 = strlen(s1);
 	int len2 = strlen(s2);
-	int i = pos, j = 0, res = npos;
-	for (; i < len1; i++) {
+	int i = pos > len1 ? len1 - 1 : pos , j = 0, res = npos;
+	for (; i >= 0; i--) {
 		for (j = 0; j < len2; j++) {
 			if (*(s1 + i) == *(s2 + j)) {
 				break;
@@ -649,11 +649,11 @@ size_t My_String::to_find_last(const char* s1, const char* s2, size_t pos) const
 	return res;
 }
 
-size_t My_String::find_last_of(const My_String& str, size_t pos = 0) const noexcept {
+size_t My_String::find_last_of(const My_String& str, size_t pos) const noexcept {
 	return to_find_last(data->_data, str.get_data()->_data, pos);
 }
 
-size_t My_String::find_last_of(const char* s, size_t pos = 0) const {
+size_t My_String::find_last_of(const char* s, size_t pos) const {
 	return to_find_last(data->_data, s, pos);
 }
 
@@ -662,7 +662,7 @@ size_t My_String::find_last_of(const char* s, size_t pos, size_t n) const {
 	return to_find_last(data->_data, tmp.get_data()->_data, pos);
 }
 
-size_t My_String::find_last_of(char c, size_t pos = 0) const noexcept {
+size_t My_String::find_last_of(char c, size_t pos) const noexcept {
 	char s[1];
 	s[0] = c;
 	return to_find_last(data->_data, s, pos);
@@ -683,11 +683,11 @@ size_t My_String::to_find_first_not(const char* s1, const char* s2, size_t pos) 
 	return npos;
 }
 
-size_t My_String::find_first_not_of(const My_String& str, size_t pos = 0) const noexcept {
+size_t My_String::find_first_not_of(const My_String& str, size_t pos) const noexcept {
 	return to_find_first_not(data->_data, str.get_data()->_data, pos);
 }
 
-size_t My_String::find_first_not_of(const char* s, size_t pos = 0) const {
+size_t My_String::find_first_not_of(const char* s, size_t pos) const {
 	return to_find_first_not(data->_data, s, pos);
 }
 
@@ -696,7 +696,7 @@ size_t My_String::find_first_not_of(const char* s, size_t pos, size_t n) const {
 	return to_find_first_not(data->_data, tmp.get_data()->_data, pos);
 }
 
-size_t My_String::find_first_not_of(char c, size_t pos = 0) const noexcept {
+size_t My_String::find_first_not_of(char c, size_t pos) const noexcept {
 	char s[1];
 	s[0] = c;
 	return to_find_first_not(data->_data, s, pos);
@@ -705,22 +705,22 @@ size_t My_String::find_first_not_of(char c, size_t pos = 0) const noexcept {
 size_t My_String::to_find_last_not(const char* s1, const char* s2, size_t pos) const {
 	int len1 = strlen(s1);
 	int len2 = strlen(s2);
-	int i = pos, j = 0, res = npos;
-	for (; i < len1; i++) {
+	int i = pos > len1 ? len1 - 1 : pos , j = 0, res = npos;
+	for (; i >=0; i--) {
 		for (j = 0; j < len2; j++) {
 			if (*(s1 + i) == *(s2 + j)) {
 				break;
 			}
 		}
-		if (j >= len2) res = i;
+		if (j >= len2) return i;
 	}
 	return res;
 }
-size_t My_String::find_last_not_of(const My_String& str, size_t pos = 0) const noexcept {
+size_t My_String::find_last_not_of(const My_String& str, size_t pos) const noexcept {
 	return to_find_last_not(data->_data, str.get_data()->_data, pos);
 }
 
-size_t My_String::find_last_not_of(const char* s, size_t pos = 0) const {
+size_t My_String::find_last_not_of(const char* s, size_t pos) const {
 	return to_find_last_not(data->_data, s, pos);
 }
 
@@ -729,7 +729,7 @@ size_t My_String::find_last_not_of(const char* s, size_t pos, size_t n) const {
 	return to_find_last_not(data->_data, tmp.get_data()->_data, pos);
 }
 
-size_t My_String::find_last_not_of(char c, size_t pos = 0) const noexcept {
+size_t My_String::find_last_not_of(char c, size_t pos) const noexcept {
 	char s[1];
 	s[0] = c;
 	return to_find_last_not(data->_data, s, pos);
@@ -779,6 +779,7 @@ istream& operator>> (istream& is, My_String& str) {
 		str.append(1, ch);
 		ch = is.get();
 	}
+	is.ignore(1024, '\n');
 	return is;
 }
 
