@@ -6,11 +6,11 @@ using String = My_String;
 
 int main() {
 	String str = "abcdefghijklmn";
-	String sub = "123456";
-	str.pop_back();
+	String sub = "123456123456";
+	String subp = "12345";
 	//str += "1212";
 	//str += 'q';
-	cout << str << endl << sub;
+	cout << sub.rfind("23488",5);
 	system("pause");
 	return 0;
 }

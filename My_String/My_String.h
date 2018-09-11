@@ -90,19 +90,19 @@ public:
 
 	//My_String operations
 	const char* c_str() const;//¡Ì
-	size_t copy(char*, size_t, size_t);
+	size_t copy(char*, size_t, size_t);//¡Ì
 
-	size_t to_find(const char*,const char*, size_t) const;
-	size_t find(const My_String& str, size_t pos) const noexcept;
-	size_t find(const char* s, size_t pos) const;
-	size_t find(const char* s, size_t pos, size_t n) const;
-	size_t find(char c, size_t pos) const noexcept;
+	size_t to_find(const char*,const char*, size_t) const;//¡Ì
+	size_t find(const My_String& str, size_t pos = 0) const noexcept;
+	size_t find(const char* s, size_t pos = 0) const;//¡Ì
+	size_t find(const char* s, size_t pos, size_t n) const;//¡Ì
+	size_t find(char c, size_t pos = 0) const noexcept;//¡Ì
 
-	size_t to_rfind(const char*, const char*, size_t) const;
-	size_t rfind(const My_String& str, size_t pos) const noexcept;
-	size_t rfind(const char* s, size_t pos) const;
-	size_t rfind(const char* s, size_t pos, size_t n) const;
-	size_t rfind(char c, size_t pos) const noexcept;
+	size_t to_rfind(const char*, const char*, size_t) const;//¡Ì
+	size_t rfind(const My_String& str, size_t pos) const noexcept;//¡Ì
+	size_t rfind(const char* s, size_t pos) const;//¡Ì
+	size_t rfind(const char* s, size_t pos, size_t n) const;//¡Ì
+	size_t rfind(char c, size_t pos) const noexcept;//¡Ì
 
 	size_t to_find_first(const char*, const char*, size_t) const;
 	size_t find_first_of(const My_String& str, size_t pos) const noexcept;

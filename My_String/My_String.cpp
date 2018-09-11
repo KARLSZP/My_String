@@ -517,10 +517,15 @@ const char* My_String::c_str() const {
 }
 
 size_t My_String::copy(char* buf, size_t len, size_t pos = 0) {
-	for (size_t i = 0; i < len; i++) {
-		buf[0] = data->_data[pos + i];
+	if (pos > data->length || pos < 0) {
+		throw(out_of_range("Invalid Position!"));
 	}
-	return len > data->length - pos ? len : data->length - pos;
+	else {
+		size_t l = len > data->length - pos ? len : data->length - pos;
+		My_String tmp(*this, pos, len);
+		strcpy(buf, tmp.c_str());
+	}
+	return len > data->length - pos ? data->length - pos : len;
 }
 
 size_t My_String::to_find(const char* s1,const char* s2, size_t pos) const {
@@ -540,11 +545,11 @@ size_t My_String::to_find(const char* s1,const char* s2, size_t pos) const {
 	return j >= len2 ? i - len2 : npos;
 }
 
-size_t My_String::find(const My_String& str, size_t pos = 0) const noexcept {
+size_t My_String::find(const My_String& str, size_t pos) const noexcept {
 	return to_find(data->_data, str.get_data()->_data, pos);
 }
 
-size_t My_String::find(const char* s, size_t pos = 0) const {
+size_t My_String::find(const char* s, size_t pos) const {
 	return to_find(data->_data, s, pos);
 }
 
@@ -553,27 +558,29 @@ size_t My_String::find(const char* s, size_t pos, size_t n) const {
 	return to_find(data->_data, tmp.get_data()->_data, pos);
 }
 
-size_t My_String::find(char c, size_t pos = 0) const noexcept {
-	char s[1];
+size_t My_String::find(char c, size_t pos) const noexcept {
+	char s[2];
 	s[0] = c;
+	s[1] = '\0';
 	return to_find(data->_data, s, pos);
 }
 
 size_t My_String::to_rfind(const char * s1, const char* s2, size_t pos) const {
 	int len1 = strlen(s1);
 	int len2 = strlen(s2);
-	int i = pos == npos ? len1 : pos, j = len2;
+	int i = pos == npos ? len1 : pos, j = len2, k = 1;
 	while (i >= 0&&j > 0) {
 		if (*(s1 + i) == *(s2 + j - 1)) {
 			i--;
 			j--;
 		}
 		else {
-			i = i - j + len2 + 1;
+			i = pos - k;
 			j = len2;
+			k++;
 		}
 	}
-	return j ? npos : i;
+	return j ? npos : i + 1;
 }
 size_t My_String::rfind(const My_String& str, size_t pos = 0) const noexcept {
 	return to_rfind(data->_data, str.get_data()->_data, pos);
