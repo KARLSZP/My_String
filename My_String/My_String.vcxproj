@@ -116,7 +116,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="My_String.cpp" />
-    <ClCompile Include="Test_My_String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="My_String.h" />
